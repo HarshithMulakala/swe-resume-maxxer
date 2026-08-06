@@ -63,6 +63,7 @@ Everything below comes from reading the actual prompts and code (`roles/software
 8. Hyphenated terms that wrap across lines get their hyphen deleted ("real-time" becomes "real time" split across lines). Keep them on one line.
 9. Overlaid text-box edits on a PDF leak BOTH old and new text into extraction. Regenerate PDFs cleanly, never patch them.
 10. White/hidden text IS extracted by the scorer but do not use it. It is the known exploit, it is detectable, and it is dishonest.
+11. In the header contact line, keep the number of pipe-separated parts EQUAL to the number of hyperlinks. The extractor's link matcher lets a link-less part (like a bare phone number) greedily consume the next link, which shifts every following URL onto the wrong text (a GitHub URL ending up on the phone number kills enrichment). Cheapest fix: give the phone a tel: hyperlink so parts and links zip up positionally.
 
 ## GitHub enrichment mechanics
 
@@ -70,6 +71,7 @@ Everything below comes from reading the actual prompts and code (`roles/software
 - Repos where the user has 0 attributed commits are dropped in code; under 4 commits are excluded by the selection prompt. 15+ commits get prioritized.
 - An LLM picks 7 repos, pre-sorted by stars. The evaluator sees ONLY: username, name, bio, followers, repo count, and per repo name/description/URL/stars/forks/language.
 - So: real descriptions on the top repos matter a lot, junk repos should be private, the bio field is shown, and contributor counts/commit counts are NOT shown to the evaluator even though the selection uses them.
+- Empty repos (zero commits) return HTTP 404 on /contributors and /commits, not an empty list. A 404 there means "empty", not "deleted". Empty repos are invisible to the scorer no matter how many stars they have; pushing the code is what makes them count.
 - After any GitHub change, delete `cache/gh_*` and `cache/githubcache_*` or the scorer keeps using the old snapshot.
 
 ## Measurement discipline

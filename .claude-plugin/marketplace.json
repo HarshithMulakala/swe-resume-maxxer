@@ -1,5 +1,5 @@
 {
-  "name": "resume-maxxer",
+  "name": "swe-resume-maxxer",
   "owner": { "name": "Harshith Mulakala" },
   "metadata": {
     "description": "Score and maximize your resume against HackerRank's open-source hiring-agent",
@@ -10,7 +10,7 @@
       "name": "resume-maxxer",
       "source": "./",
       "strict": false,
-      "description": "Score a resume against HackerRank's real hiring-agent rubric and iterate it to the max, honestly. No API keys needed.",
+      "description": "Score a SWE/SWE-intern/AI resume against HackerRank's real hiring-agent rubric and iterate it to the max, honestly. No API keys needed.",
       "skills": ["./skills/resume-maxxer"]
     }
   ]

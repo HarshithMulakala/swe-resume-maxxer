@@ -1,17 +1,19 @@
 ---
 name: resume-maxxer
-description: Score a resume PDF against HackerRank's open-source hiring-agent rubric and iteratively maximize it with honest content only. No API keys needed, the agent applies the real rubric itself. Use when the user wants to score, test, or optimize a resume, or mentions hiring-agent, ATS scoring, or resume ranking.
+description: Score a software-engineering resume PDF against HackerRank's open-source hiring-agent rubric (software engineering intern role) and iteratively maximize it with honest content only. Built for SWE, SWE intern, new grad, and AI/ML engineering resumes. No API keys needed, the agent applies the real rubric itself. Use when the user wants to score, test, or optimize a SWE or AI resume, or mentions hiring-agent, ATS scoring, or resume ranking.
 ---
 
 # resume-maxxer
 
-You are going to score a real resume the way HackerRank's open-source `hiring-agent` scorer does, then iterate the resume until the score tops out. You apply the scorer's ACTUAL rubric prompts yourself, so no API keys or local models are required. Honest content only: never fabricate experience or metrics, never use hidden text. If the user's real background caps a category, say so and tell them the real-world action that raises it.
+You are going to score a real software-engineering resume the way HackerRank's open-source `hiring-agent` scorer does, then iterate the resume until the score tops out. The vendored rubric is the `software_engineering_intern` role, which is what HackerRank ships and what this skill is tuned for; it fits SWE, SWE intern, new grad, and AI/ML engineering resumes. If the user's resume is for a non-engineering role, tell them this rubric will not evaluate it meaningfully. You apply the scorer's ACTUAL rubric prompts yourself, so no API keys or local models are required. Honest content only: never fabricate experience or metrics, never use hidden text. If the user's real background caps a category, say so and tell them the real-world action that raises it.
 
 ## Setup (keyless, no cloning, once per workspace)
 
 ```
 pip install pymupdf==1.26.3 pymupdf4llm==0.0.27 jinja2
 ```
+
+(If bare `pip`/`python` resolve to the wrong interpreter, use the platform's launcher, e.g. `py -3.12 -m pip ...` on Windows.) All `scripts/...` and `references/...` paths below are relative to THIS skill's installed directory (e.g. `.agents/skills/resume-maxxer/` or `~/.claude/skills/resume-maxxer/`), so prefix them or cd there; your content JSONs and PDFs live in the user's workspace.
 
 Everything else is already in this skill: the scorer's ACTUAL rubric prompts are vendored verbatim at `references/criteria.jinja` and `references/system_message.jinja`, and the scorer's exact PDF extraction module is vendored at `scripts/pymupdf_rag.py` (all MIT from the hiring-agent repo). Read both rubric files completely before scoring anything. They ARE the ground truth; `references/rubric.md` is the distilled cheat sheet with the extraction traps and deterministic audit. Keep the pinned versions: newer pymupdf breaks the extraction module.
 
@@ -36,7 +38,7 @@ Then simulate the scorer's selection exactly: discard forks (unless the fork its
 
 ## Step 3: Score it yourself (3 passes)
 
-Apply `references/criteria.jinja` + `references/system_message.jinja` to (a) the extracted resume text and (b) the simulated GitHub payload. Produce the same output shape as the scorer: per-category score with evidence, bonus breakdown, deduction list. Do THREE independent passes with different postures: once generously, once strictly, once adversarially (hunt for every deduction the prompts mandate). Report the median and the spread. Also run the deterministic audit in `references/rubric.md` (link checks, blocklist names, cap conditions, bonus triggers); deterministic findings override vibes.
+Apply `references/criteria.jinja` + `references/system_message.jinja` to (a) the extracted resume text and (b) the simulated GitHub payload. Produce the same output shape as the scorer: per-category score with evidence, bonus breakdown, deduction list. Do THREE independent passes with different postures: once generously, once strictly, once adversarially (hunt for every deduction the prompts mandate). Take the median PER CATEGORY, then recompute the total from those category medians; report that plus the min-max spread of the pass totals. Also run the deterministic audit in `references/rubric.md` (link checks, blocklist names, cap conditions, bonus triggers); deterministic findings override vibes.
 
 ## Step 4: Rewrite, render, iterate
 
@@ -48,7 +50,7 @@ Apply `references/criteria.jinja` + `references/system_message.jinja` to (a) the
    - Portfolio URL in header (+2), LinkedIn (+1), "Founder"/"Co-Founder" in job titles where true (+3-5).
    - Nothing that pattern-matches the simple-project blocklist (todo, calculator, CRUD, weather, portfolio-site, ...).
    - No invented numbers. Reuse the user's real metrics; qualitative phrasing where none exist.
-3. Render: `python scripts/make_resume.py content/vN.json versions/vN.pdf`. Must be 1 page. The script prints page count, embedded links, and the scorer's-eye extraction. Verify all three.
+3. Render: `python scripts/make_resume.py content/vN.json versions/vN.pdf` (add `--template path/to/your.html.j2` when replicating the user's own format instead of the default template). Must be 1 page. The script prints page count, embedded links, and the scorer's-eye extraction. Verify all three.
 4. Re-score (step 3) and repeat until the audit is clean and your three-pass median plateaus.
 5. Confirm every date, title, and claim you were not explicitly given with the user. Never guess facts onto a resume.
 6. GitHub fixes need explicit user approval (they touch a public profile): real descriptions on the top repos, privatize junk repos, surface work hidden in forks or org accounts.

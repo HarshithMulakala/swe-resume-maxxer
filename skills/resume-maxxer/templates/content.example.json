@@ -6,7 +6,7 @@
   "name": "Jane Doe",
   "contact": [
     {"text": "jane@example.com", "url": "mailto:jane@example.com"},
-    {"text": "(555) 555-5555"},
+    {"text": "(555) 555-5555", "url": "tel:+15555555555"},
     {"text": "janedoe.dev", "url": "https://janedoe.dev"},
     {"text": "linkedin.com/in/janedoe", "url": "https://www.linkedin.com/in/janedoe"},
     {"text": "github.com/janedoe", "url": "https://github.com/janedoe"}
@@ -36,10 +36,9 @@
   "projects": [
     {
       "name": "RealTimeThing",
-      "stack": "TypeScript, WebSockets, PostgreSQL",
       "link": {"text": "GitHub", "url": "https://github.com/janedoe/realtimething"},
       "bullets": [
-        "Name the stack again in prose here. The scorer deletes the stack from the title line, bullets are what survive.",
+        "Name the full stack in prose here (TypeScript, WebSockets, PostgreSQL). Never put it in the title as 'Name | Tech, Tech', the scorer deletes that.",
         "If a live demo exists, put the URL in a bullet as visible text. Live demos are worth 10-20% extra."
       ]
     }

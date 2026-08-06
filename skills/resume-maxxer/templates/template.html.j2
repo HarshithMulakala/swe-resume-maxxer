@@ -17,9 +17,7 @@
   .name {
     text-align: center;
     font-weight: bold;
-    font-variant: small-caps;
     font-size: 17.8pt;
-    letter-spacing: 0.4pt;
     line-height: 1.05;
   }
   .contact { text-align: center; font-size: 9.7pt; margin-top: 1.5pt; }
@@ -76,7 +74,8 @@
 {% for p in projects %}
 <div class="entry">
   <div class="row">
-    <span class="left"><b>{{ p.name }}</b> | <i>{{ p.stack }}</i></span>
+    {# Never render "Name | Tech, Tech" in the title: the scorer's transform deletes the tech list. Stack belongs in bullet prose. #}
+    <span class="left"><b>{{ p.name }}</b></span>
     <span class="right">{% if p.link %}<a href="{{ p.link.url }}">{{ p.link.text }}</a>{% elif p.tag %}{{ p.tag }}{% endif %}</span>
   </div>
   <ul>

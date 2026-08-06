@@ -1,6 +1,10 @@
-# resume-maxxer
+# swe-resume-maxxer
 
-HackerRank open sourced the actual LLM pipeline they built to rank 50,000+ intern resumes ([hiring-agent](https://github.com/interviewstreet/hiring-agent)). So I made a Claude Code skill that runs it locally on your resume, figures out exactly where you're losing points, and rewrites your resume until the score tops out. No fake stuff, just presenting what you actually did in a way the scorer can actually read.
+**For SWE, SWE intern, new grad, and AI/ML resumes.**
+
+HackerRank open sourced the actual LLM pipeline they built to rank 50,000+ software intern applications ([hiring-agent](https://github.com/interviewstreet/hiring-agent)). So I made a coding agent skill that scores your resume against that exact rubric, figures out exactly where you're losing points, and rewrites your resume until the score tops out. No fake stuff, just presenting what you actually did in a way the scorer can actually read.
+
+If you're applying to software engineering internships or early-career SWE/AI roles, this is literally the rubric class of tool screening you. The scoring dimensions are all engineering signals: GitHub, open source, shipped projects, production experience, technical skills. It is not built for design, PM, finance, or any non-engineering resume.
 
 ## My results (real runs, not vibes)
 
@@ -32,14 +36,14 @@ Open source is 35 points, self projects 30, production 25, technical skills 10, 
 One line, works across Claude Code, Codex, Cursor, and basically every coding agent (it drops the skill in `.agents/skills` and symlinks Claude Code automatically):
 
 ```bash
-npx skills add HarshithMulakala/resume-maxxer
+npx skills add HarshithMulakala/swe-resume-maxxer
 ```
 
 Claude Code plugin route if you prefer:
 
 ```
-/plugin marketplace add HarshithMulakala/resume-maxxer
-/plugin install resume-maxxer@resume-maxxer
+/plugin marketplace add HarshithMulakala/swe-resume-maxxer
+/plugin install resume-maxxer@swe-resume-maxxer
 ```
 
 Or just copy it manually: `skills/resume-maxxer/` goes into `~/.claude/skills/` (Claude Code) or `.agents/skills/` (Codex, Cursor, most others).
