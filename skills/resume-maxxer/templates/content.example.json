@@ -1,0 +1,52 @@
+{
+  "base_font_size": "9.5pt",
+  "line_height": "1.08",
+  "section_gap": "4pt",
+  "entry_gap": "2.4pt",
+  "name": "Jane Doe",
+  "contact": [
+    {"text": "jane@example.com", "url": "mailto:jane@example.com"},
+    {"text": "(555) 555-5555"},
+    {"text": "janedoe.dev", "url": "https://janedoe.dev"},
+    {"text": "linkedin.com/in/janedoe", "url": "https://www.linkedin.com/in/janedoe"},
+    {"text": "github.com/janedoe", "url": "https://github.com/janedoe"}
+  ],
+  "education": {
+    "school": "State University",
+    "degree": "Bachelor of Science",
+    "major": "Computer Science",
+    "date": "May 2028",
+    "lines": [
+      {"label": "Honors", "text": "Dean's List"}
+    ]
+  },
+  "experience": [
+    {
+      "org": "Acme Startup",
+      "title": "Co-Founder & CTO",
+      "location": "Austin, TX",
+      "date": "January 2026 - Present",
+      "desc": "One-line italic descriptor of what the company does",
+      "bullets": [
+        "Action verb + what you built + the real stack in prose + a real metric. Never invent numbers.",
+        "Second bullet. Keep each under about 200 characters so lines wrap at most once."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "RealTimeThing",
+      "stack": "TypeScript, WebSockets, PostgreSQL",
+      "link": {"text": "GitHub", "url": "https://github.com/janedoe/realtimething"},
+      "bullets": [
+        "Name the stack again in prose here. The scorer deletes the stack from the title line, bullets are what survive.",
+        "If a live demo exists, put the URL in a bullet as visible text. Live demos are worth 10-20% extra."
+      ]
+    }
+  ],
+  "additional": [
+    {"label": "Languages", "text": "Python, TypeScript, Go, SQL"},
+    {"label": "Frameworks & Cloud", "text": "React, Node.js, FastAPI, AWS, Docker, PostgreSQL"},
+    {"label": "Tools & Certifications", "text": "Git, CI/CD, REST APIs; any certifications here"}
+  ]
+}

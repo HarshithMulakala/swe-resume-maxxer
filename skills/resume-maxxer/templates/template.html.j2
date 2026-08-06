@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: letter; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 612pt; }
+  body {
+    font-family: "Times New Roman", "Tinos", "Liberation Serif", serif;
+    font-size: {{ base_font_size | default('9.9pt') }};
+    line-height: {{ line_height | default('1.12') }};
+    color: #000;
+    padding: 18pt 36pt 6pt 36pt;
+  }
+  a { color: #000; text-decoration: none; }
+  .name {
+    text-align: center;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size: 17.8pt;
+    letter-spacing: 0.4pt;
+    line-height: 1.05;
+  }
+  .contact { text-align: center; font-size: 9.7pt; margin-top: 1.5pt; }
+  .section {
+    font-weight: bold;
+    font-size: 10pt;
+    border-bottom: 1pt solid #000;
+    margin-top: {{ section_gap | default('4.5pt') }};
+    margin-bottom: 2pt;
+    padding-bottom: 0.5pt;
+  }
+  .entry { margin-top: {{ entry_gap | default('2.8pt') }}; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .row .left { flex: 1 1 auto; }
+  .row .right { flex: 0 0 auto; white-space: nowrap; padding-left: 8pt; }
+  .desc { font-style: italic; }
+  ul { list-style: none; }
+  li { padding-left: 10pt; text-indent: -6.5pt; margin-top: {{ bullet_gap | default('0.2pt') }}; }
+  li::before { content: "\2022  "; }
+  .addl { margin-top: 1.5pt; }
+  b, strong { font-weight: bold; }
+  i, em { font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="name">{{ name }}</div>
+<div class="contact">{% for part in contact %}{% if part.url %}<a href="{{ part.url }}">{{ part.text }}</a>{% else %}{{ part.text }}{% endif %}{% if not loop.last %} | {% endif %}{% endfor %}</div>
+
+<div class="section">EDUCATION</div>
+<div class="entry">
+  <div class="row">
+    <span class="left"><b>{{ education.school }}</b>&nbsp;&nbsp;&nbsp;&nbsp;{{ education.degree }} | <i>{{ education.major }}</i></span>
+    <span class="right">{{ education.date }}</span>
+  </div>
+  {% for line in education.lines %}<div class="addl"><b>{{ line.label }}:</b> {{ line.text }}</div>{% endfor %}
+</div>
+
+<div class="section">WORK EXPERIENCE</div>
+{% for job in experience %}
+<div class="entry">
+  <div class="row">
+    <span class="left"><b>{{ job.org }}</b> - <i>{{ job.title }}</i>{% if job.location %}; {{ job.location }}{% endif %}</span>
+    <span class="right">{{ job.date }}</span>
+  </div>
+  {% if job.desc %}<div class="desc">{{ job.desc }}</div>{% endif %}
+  <ul>
+    {% for b in job.bullets %}<li>{{ b }}</li>{% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+<div class="section">PROJECTS</div>
+{% for p in projects %}
+<div class="entry">
+  <div class="row">
+    <span class="left"><b>{{ p.name }}</b> | <i>{{ p.stack }}</i></span>
+    <span class="right">{% if p.link %}<a href="{{ p.link.url }}">{{ p.link.text }}</a>{% elif p.tag %}{{ p.tag }}{% endif %}</span>
+  </div>
+  <ul>
+    {% for b in p.bullets %}<li>{{ b }}</li>{% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+<div class="section">ADDITIONAL INFORMATION</div>
+{% for line in additional %}
+<div class="addl"><b>{{ line.label }}:</b> {{ line.text }}</div>
+{% endfor %}
+
+</body>
+</html>
